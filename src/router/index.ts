@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      redirect: '/login',
     },
     {
       path: '/about',
@@ -23,6 +23,14 @@ const router = createRouter({
       component: () => import('../components/Login.vue'),
     },
   ],
+})
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('token') // Kiểm tra token
+  if (!isAuthenticated && to.path !== '/login') {
+    next('/login') // Chưa đăng nhập thì bắt buộc vào trang login
+  } else {
+    next() // Nếu đã đăng nhập, cho vào các trang khác
+  }
 })
 
 export default router
