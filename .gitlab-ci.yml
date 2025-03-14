@@ -1,0 +1,35 @@
+image: node:18 # Chạy trên Node.js 18
+
+stages:
+  - install
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/ # Lưu cache để tăng tốc độ build
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+  only:
+    - main # Chạy CI/CD chỉ trên nhánh main
+
+build_project:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/ # Lưu kết quả build để deploy
+  only:
+    - main
+
+deploy_production:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."
+    # Thêm script deploy thực tế (rsync, scp, docker, etc.)
+  only:
+    - main
