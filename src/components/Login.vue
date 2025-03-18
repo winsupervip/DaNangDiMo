@@ -1,80 +1,66 @@
 <template>
-  <div class="login-container">
-    <h1>User Login</h1>
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+  <div class="background-container">
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+  </div>  
+
+  <div class="login-form">
+    <h2>Đăng nhập / Đăng ký</h2>
+    <div class="form-group">
+      <label class="form-label">Email/số điện thoại di động</label>
+      <input
+        type="text"
+        v-model="email"
+        placeholder="+84 hoặc yourname@gmail.com"
+        class="form-input"
+        :class="{ 'error': errorMessage }"
+      />
+      <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
+    </div>
+    <button 
+      class="sign-in-btn" 
+      @click="handleSignIn"
+      :disabled="loading || !email"
+    >
+      {{ loading ? 'Đang xử lý...' : 'Sign In' }}
+    </button>
+    <div class="divider">hoặc</div>
+    <div class="social-login">
+      <button 
+        class="google-btn"
+        @click="handleGoogleSignIn"
+        :disabled="loading"
+      >
+        <img src="/google-icon.svg" alt="Google" />
+        Google
+      </button>
+      <button 
+        class="facebook-btn"
+        @click="handleFacebookSignIn"
+        :disabled="loading"
+      >
+        <img src="/facebook-icon.svg" alt="Facebook" />
+        Facebook
+      </button>
+    </div>
+    <a href="#" class="forgot-password">Bạn quên mật khẩu?</a>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'UserLogin',
-  data() {
-    return {
-      username: '',
-      password: ''
-    };
-  },
-  methods: {
-    handleSubmit() {
-      // Handle login logic here
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
-    }
-  }
-};
+<script setup>
+import { useLoginForm } from '../composables/useLoginForm'
+
+const {
+  email,
+  loading,
+  errorMessage,
+  isValidInput,
+  handleSignIn,
+  handleGoogleSignIn,
+  handleFacebookSignIn
+} = useLoginForm()
 </script>
 
-<style scoped>
-.login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
+<style>
+@import '../assets/styles/LoginForm.css';
 </style>
