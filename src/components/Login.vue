@@ -2,7 +2,7 @@
   <div class="background-container">
     <div class="background-image"></div>
     <div class="overlay"></div>
-  </div>  
+  </div>
 
   <div class="login-form">
     <h2>Đăng nhập / Đăng ký</h2>
@@ -17,8 +17,8 @@
       />
       <span v-if="errorMessage" class="error-message">{{ errorMessage }}</span>
     </div>
-    <button 
-      class="sign-in-btn" 
+    <button
+      class="sign-in-btn"
       @click="handleSignIn"
       :disabled="loading || !email"
     >
@@ -26,20 +26,20 @@
     </button>
     <div class="divider">hoặc</div>
     <div class="social-login">
-      <button 
+      <button
         class="google-btn"
         @click="handleGoogleSignIn"
         :disabled="loading"
       >
-        <img src="/google-icon.svg" alt="Google" />
+        <img src="/images/google-icon.svg" alt="Google" />
         Google
       </button>
-      <button 
+      <button
         class="facebook-btn"
         @click="handleFacebookSignIn"
         :disabled="loading"
       >
-        <img src="/facebook-icon.svg" alt="Facebook" />
+        <img src="/images/facebook-icon.svg" alt="Facebook" />
         Facebook
       </button>
     </div>
@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useLoginForm } from '../composables/useLoginForm'
 
 const {
