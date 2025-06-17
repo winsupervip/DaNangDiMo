@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 
+
+
 // Định nghĩa object styles cho các class
 const styles = {
   foodToolbar: {
@@ -166,4 +168,4 @@ export function FoodToolBar() {
     </div>
   );
 }
- 
+
