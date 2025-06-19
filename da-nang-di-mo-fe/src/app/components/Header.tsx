@@ -106,7 +106,16 @@ export function HeaderBar() {
         <Input.Search
           placeholder="Tìm kiếm món ăn, địa điểm..."
           allowClear
-          style={{width: 220}}
+          style={{
+        width: 220,
+        transition: "width 0.3s",
+          }}
+          onFocus={e => {
+        e.target.style.width = "340px";
+          }}
+          onBlur={e => {
+        e.target.style.width = "220px";
+          }}
         />
       </div>
 

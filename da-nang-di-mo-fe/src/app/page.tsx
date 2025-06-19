@@ -1,15 +1,16 @@
 "use client";
-import {useRouter} from "next/navigation";
 
-import {Carousel} from "./components/Carousel";
+import { Carousel } from "./components/Carousel";
 
-import {HeaderBar} from "./components/Header";
+import { Footer } from "./components/Footer";
+import { HeaderBar } from "./components/Header";
 import "./page.scss";
-import {Footer} from "./components/Footer";
-import {FoodToolBar} from "./pages/home/FoodToolBar";
+import { FoodItems } from "./pages/home/components/FoodItems";
+import { FoodToolBar } from "./pages/home/components/FoodToolBar";
+
 
 export default function Home() {
-  const router = useRouter();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   router.push("/auth/login");
@@ -19,9 +20,9 @@ export default function Home() {
     <div className="page-root">
       <HeaderBar />
       <Carousel />
-      <div className="food-body">
+      <div className="food-body" style={{display: "flex"}}>
         <FoodToolBar />
-        <div className="food-list-content"></div>
+        <FoodItems />
       </div>
       <Footer />
     </div>

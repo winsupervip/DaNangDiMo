@@ -9,7 +9,7 @@ export function Carousel() {
     {src: "/images/carousel/carousel3.png", alt: "Ảnh 3"},
   ];
   return (
-    <div className="page-root">
+    <>
       {(() => {
         return (
           <div className="carousel-container">
@@ -35,6 +35,6 @@ export function Carousel() {
           </div>
         );
       })()}
-    </div>
+    </>
   );
 }
