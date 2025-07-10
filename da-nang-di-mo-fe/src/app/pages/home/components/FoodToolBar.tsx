@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { useState } from "react";
+import { createContext, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSelectedSubItem } from "../../../slices/selectedSubItemSlice";
 
 
-
-// Định nghĩa object styles cho các class
 const styles = {
   foodToolbar: {
     background: "#fff",
@@ -103,10 +103,15 @@ interface MenuItem {
   active?: boolean;
   subItems?: string[];
 }
+
+// Context để truyền selectedSubItem
+export const SelectedSubItemContext = createContext<string | undefined>(undefined);
+
 export function FoodToolBar() {
   // State lưu index của menu đang mở submenu, null nếu không mở gì
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
+  const dispatch = useDispatch();
   function getToolbarItemStyle(
     idx: number,
     menuItems: MenuItem[],
@@ -156,7 +161,11 @@ export function FoodToolBar() {
             {openIdx === idx && item.subItems && (
               <div style={styles.foodToolbarSubmenu}>
                 {item.subItems.map((sub) => (
-                  <div key={sub} style={styles.foodToolbarSubmenuItem}>
+                  <div
+                    key={sub}
+                    style={styles.foodToolbarSubmenuItem}
+                    onClick={() => dispatch(setSelectedSubItem(sub))}
+                  >
                     {sub}
                   </div>
                 ))}
@@ -165,6 +174,7 @@ export function FoodToolBar() {
           </div>
         ))}
       </div>
+      
     </div>
   );
 }

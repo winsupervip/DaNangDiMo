@@ -1,7 +1,14 @@
 "use client";
 import FastfoodIcon from '@mui/icons-material/Fastfood';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import HouseIcon from '@mui/icons-material/House';
+import ReplyIcon from '@mui/icons-material/Reply';
 import Image from "next/image";
+import { useState } from "react";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+
 type FoodItem = {
   id: number;
   name: string;
@@ -12,6 +19,7 @@ type FoodItem = {
   rating: number; 
   reviews?: number; 
   category: string; 
+  hastags: string[];
   isAvailable?: boolean; 
   deliveryTime?: string; 
 };
@@ -29,6 +37,7 @@ const items: FoodItem[] = [
     rating: 4.5,
     reviews: 120,
     category: "Món ăn chính",
+    hastags: ["phở", "bò", "truyền thống"],
     isAvailable: true,
     deliveryTime: "30-45 phút",
     
@@ -42,7 +51,8 @@ const items: FoodItem[] = [
     place: "Quận 3, TP.HCM",
     rating: 4.2,
     reviews: 85,
-    category: "Đồ ăn nhanh",
+    category: "Món ăn chính",
+    hastags: ["phở", "bò", "truyền thống"],
     isAvailable: true,
     deliveryTime: "20-30 phút",
   },
@@ -55,16 +65,23 @@ const items: FoodItem[] = [
     place: "Quận 5, TP.HCM",
     rating: 4.8,
     reviews: 60,
-    category: "Món khai vị",
+    category: "Món ăn chính",
+    hastags: ["healthy", "fresh"],
     isAvailable: true,
     deliveryTime: "15-25 phút",
   },
 ];
 
 export function FoodItems() {
+  // State lưu danh sách id các item đã yêu thích
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const selectedSubItem = useSelector((state: RootState) => state.selectedSubItem.value);
+  const itemsFiltered = items.filter(item => item.hastags.includes(selectedSubItem));
+  console.log("Selected Sub Item:", selectedSubItem);
+
   return (
     <div style={styles.foodItems}>
-      {items.map((item) => (
+      {itemsFiltered.map((item) => (
         <div
           key={item.id}
           style={{
@@ -97,6 +114,52 @@ export function FoodItems() {
             if (btns) btns.style.opacity = "0";
           }}
         >
+            <div style={{
+            position: "absolute",
+            top: 10,
+            left: 10,
+            zIndex: 2,
+            display: "flex",
+            gap: 8,
+            width: "calc(100% - 20px)",
+            justifyContent: "space-between"
+            }}>
+            {/* Toggle icon dựa vào trạng thái yêu thích */}
+            {favorites.includes(item.id) ? (
+              <FavoriteIcon
+                style={{
+                  width: 30,
+                  height: 30,
+                  color: "#e74c3c"
+                }}
+                aria-label="Bỏ yêu thích"
+                onClick={e => {
+                  e.stopPropagation();
+                  setFavorites(favs => favs.filter(id => id !== item.id));
+                }}
+              />
+            ) : (
+              <FavoriteBorderIcon
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+                aria-label="Yêu thích"
+                onClick={e => {
+                  e.stopPropagation();
+                  setFavorites(favs => [...favs, item.id]);
+                }}
+              />
+            )}
+            <ReplyIcon
+              style={{
+                width: 30,
+                height: 30,
+              }}
+              aria-label="Chia sẻ"
+            >
+            </ReplyIcon>
+          </div>
           <Image
             src={item.imageUrl}
             alt="logo"
@@ -212,9 +275,15 @@ export function FoodItems() {
             outline: "none",
             cursor: "pointer",
           }}
+          onClick={e => {
+            // Find the card container
+            const card = (e.currentTarget as HTMLElement).closest('.food-card');
+            if (card) {
+              card.classList.add('flipped');
+            }
+          }}
         >
-        <HouseIcon style={{ fontSize: 18 }} />
-
+          <HouseIcon style={{ fontSize: 18 }} />
           QUÁN
         </button>
         </div>

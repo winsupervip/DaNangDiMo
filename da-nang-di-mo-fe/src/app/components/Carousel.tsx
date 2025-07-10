@@ -12,24 +12,24 @@ export function Carousel() {
     <>
       {(() => {
         return (
-          <div className="carousel-container">
-            <AntdCarousel autoplay>
+            <div className="carousel-container">
+            <AntdCarousel autoplay draggable>
               {images.map((img, idx) => (
-                <div key={idx}>
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    layout="responsive"
-                    width={100}
-                    height={60}
-                    style={{
-                      width: "100%",
-                      height: "60px",
-                      objectFit: "cover",
-                      borderRadius: 16,
-                    }}
-                  />
-                </div>
+              <div key={idx}>
+                <Image
+                src={img.src}
+                alt={img.alt}
+                layout="responsive"
+                width={100}
+                height={60}
+                style={{
+                  width: "100%",
+                  height: "60px",
+                  objectFit: "cover",
+                  borderRadius: 16,
+                }}
+                />
+              </div>
               ))}
             </AntdCarousel>
           </div>
