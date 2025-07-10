@@ -81,27 +81,69 @@ const menuItems = [
     label: "Ở đâu",
     active: true,
     subItems: [
-      "Quận Hải Châu",
-      "Quận Thanh Khê",
-      "Quận Sơn Trà",
-      "Quận Ngũ Hành Sơn",
+      { name: "Quận Hải Châu", hashtags: "#haichau" },
+      { name: "Quận Thanh Khê", hashtags: "#thanhkhe" },
+      { name: "Quận Sơn Trà", hashtags: "#sontra" },
+      { name: "Quận Ngũ Hành Sơn", hashtags: "#nguhanhson" },
     ],
   },
   {
     label: "Giao hàng",
-    subItems: ["Now", "GrabFood", "Baemin"],
+    subItems: [
+      { name: "Now", hashtags: "#now" },
+      { name: "GrabFood", hashtags: "#grabfood" },
+      { name: "Baemin", hashtags: "#baemin" },
+    ],
   },
-  {label: "Ăn gì", subItems: ["Bún", "Phở", "Cơm", "Bánh mì"]},
-  {label: "Sưu tập", subItems: ["Mới nhất", "Phổ biến"]},
-  {label: "TV", subItems: ["Video review", "Phóng sự"]},
-  {label: "Bình luận", subItems: ["Tích cực", "Tiêu cực"]},
-  {label: "Blogs", subItems: ["Ẩm thực", "Du lịch"]},
-  {label: "Khuyến mãi", subItems: ["Hot", "Sắp diễn ra"]},
+  {
+    label: "Ăn gì",
+    subItems: [
+      { name: "Bún", hashtags: "#bun" },
+      { name: "Phở", hashtags: "#pho" },
+      { name: "Cơm", hashtags: "#com" },
+      { name: "Bánh mì", hashtags: "#banhmi" },
+    ],
+  },
+  {
+    label: "Sưu tập",
+    subItems: [
+      { name: "Mới nhất", hashtags: "#moinhat" },
+      { name: "Phổ biến", hashtags: "#phobien" },
+    ],
+  },
+  {
+    label: "TV",
+    subItems: [
+      { name: "Video review", hashtags: "#video" },
+     
+    ],
+  },
+  {
+    label: "Bình luận",
+    subItems: [
+      { name: "Tích cực", hashtags: "#tichcuc" },
+      { name: "Tiêu cực", hashtags: "#tieucuc" },
+    ],
+  },
+  {
+    label: "Blogs",
+    subItems: [
+      { name: "Ẩm thực", hashtags: "#amthuc" },
+      { name: "Du lịch", hashtags: "#dulich" },
+    ],
+  },
+  {
+    label: "Khuyến mãi",
+    subItems: [
+      { name: "Hot", hashtags: "#hot" },
+      { name: "Sắp diễn ra", hashtags: "#sapdienra" },
+    ],
+  },
 ];
 interface MenuItem {
   label: string;
   active?: boolean;
-  subItems?: string[];
+  subItems?: { name: string; hashtags: string }[];
 }
 
 // Context để truyền selectedSubItem
@@ -162,11 +204,11 @@ export function FoodToolBar() {
               <div style={styles.foodToolbarSubmenu}>
                 {item.subItems.map((sub) => (
                   <div
-                    key={sub}
+                    key={sub.name}
                     style={styles.foodToolbarSubmenuItem}
-                    onClick={() => dispatch(setSelectedSubItem(sub))}
+                    onClick={() => dispatch(setSelectedSubItem(sub.hashtags))}
                   >
-                    {sub}
+                    {sub.name}
                   </div>
                 ))}
               </div>

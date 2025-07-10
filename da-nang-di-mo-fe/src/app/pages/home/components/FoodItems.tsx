@@ -19,7 +19,7 @@ type FoodItem = {
   rating: number; 
   reviews?: number; 
   category: string; 
-  hastags: string[];
+  hashtags: string[];
   isAvailable?: boolean; 
   deliveryTime?: string; 
 };
@@ -37,7 +37,7 @@ const items: FoodItem[] = [
     rating: 4.5,
     reviews: 120,
     category: "Món ăn chính",
-    hastags: ["phở", "bò", "truyền thống"],
+    hashtags: ["phở", "bò", "truyền thống"],
     isAvailable: true,
     deliveryTime: "30-45 phút",
     
@@ -52,7 +52,7 @@ const items: FoodItem[] = [
     rating: 4.2,
     reviews: 85,
     category: "Món ăn chính",
-    hastags: ["phở", "bò", "truyền thống"],
+    hashtags: ["phở", "bò", "truyền thống"],
     isAvailable: true,
     deliveryTime: "20-30 phút",
   },
@@ -66,7 +66,7 @@ const items: FoodItem[] = [
     rating: 4.8,
     reviews: 60,
     category: "Món ăn chính",
-    hastags: ["healthy", "fresh"],
+    hashtags: ["healthy", "fresh"],
     isAvailable: true,
     deliveryTime: "15-25 phút",
   },
@@ -76,7 +76,7 @@ export function FoodItems() {
   // State lưu danh sách id các item đã yêu thích
   const [favorites, setFavorites] = useState<number[]>([]);
   const selectedSubItem = useSelector((state: RootState) => state.selectedSubItem.value);
-  const itemsFiltered = items.filter(item => item.hastags.includes(selectedSubItem));
+  const itemsFiltered = items.filter(item => item.hashtags.includes(selectedSubItem));
   console.log("Selected Sub Item:", selectedSubItem);
 
   return (
