@@ -1,0 +1,21 @@
+
+{
+  "explore": "Explore",
+  "where": "Where",
+  "delivery": "Delivery",
+    "district": "District", 
+    "foodType": "Food Type",
+    "searchPlaceholder": "Search for food, places...",
+    "foodTypePlaceholder": "Food Type",
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "search": "Search",
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "profile": "Profile",
+    "settings": "Settings",
+    "aboutUs": "About Us"
+  
+}

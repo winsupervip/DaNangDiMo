@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { createContext, useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { setSelectedSubItem } from "../../../slices/selectedSubItemSlice";
-
 
 const styles = {
   foodToolbar: {
@@ -152,6 +152,7 @@ export const SelectedSubItemContext = createContext<string | undefined>(undefine
 export function FoodToolBar() {
   // State lưu index của menu đang mở submenu, null nếu không mở gì
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+
 
   const dispatch = useDispatch();
   function getToolbarItemStyle(

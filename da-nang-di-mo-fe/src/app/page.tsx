@@ -5,7 +5,7 @@ import { Carousel } from "./components/Carousel";
 import { Footer } from "./components/Footer";
 import { HeaderBar } from "./components/Header";
 import "./page.scss";
-
+import "../i18n";
 import { lazy, Suspense } from 'react';
 import { FoodToolBar } from "./pages/home/components/FoodToolBar";
 import { store } from "./store";

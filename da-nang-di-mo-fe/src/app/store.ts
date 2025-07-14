@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import selectedSubItemReducer from './slices/selectedSubItemSlice';
+import languageReducer from './slices/languageSlice';
 
 export const store = configureStore({
   reducer: {
     selectedSubItem: selectedSubItemReducer,
+    language: languageReducer,
   },
 });
 

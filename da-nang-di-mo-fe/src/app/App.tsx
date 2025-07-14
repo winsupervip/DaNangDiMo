@@ -1,6 +1,6 @@
 import {ConfigProvider} from "antd";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-
+import "../i18n";
 import {Layout} from "../layouts";
 import Login from "./auth/login/page";
 

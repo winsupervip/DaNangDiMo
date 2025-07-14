@@ -1,0 +1,19 @@
+{
+  "explore": "Khám phá",
+  "where": "Ở đâu",
+  "delivery": "Giao hàng",
+ "district": "Quận/Huyện",
+  "foodType": "Loại thực phẩm",
+  "searchPlaceholder": "Tìm kiếm món ăn, địa điểm...",
+  "foodTypePlaceholder": "Loại thực phẩm",
+  "language": "Ngôn ngữ",
+  "selectLanguage": "Chọn ngôn ngữ",
+  "search": "Tìm kiếm",
+  "home": "Trang chủ",
+  "login": "Đăng nhập",
+  "logout": "Đăng xuất",
+  "register": "Đăng ký",
+  "profile": "Hồ sơ",
+  "settings": "Cài đặt",
+  "aboutUs": "Về chúng tôi"
+}
