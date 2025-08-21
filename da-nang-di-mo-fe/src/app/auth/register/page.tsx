@@ -17,7 +17,7 @@ export default function Register() {
     email: string;
     username: string;
   }) => {
-    // Xử lý đăng ký ở đây
+
     console.log("Register info:", values);
   };
 
@@ -132,7 +132,7 @@ export default function Register() {
                 type="primary"
                 htmlType="submit"
                 block
-                className={styles.roundButton}
+                className={`${styles.roundButton} `}
               >
                 Đăng ký
               </Button>

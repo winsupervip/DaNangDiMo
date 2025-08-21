@@ -71,22 +71,17 @@ const dispatch = useDispatch();
     >
       {/* Logo */}
       <div style={{display: "flex", alignItems: "center"}}>
-        {/* <Image
-          src="/logo.png"
-          alt="Logo"
-          height={40}
-          width={40}
-          style={{marginRight: 12, objectFit: "contain"}}
-          priority
-        /> */}
+ 
         <Link href="/" style={{textDecoration: "none"}}>
           <span
             style={{
+              marginRight: 16,
               fontWeight: 700,
               fontSize: 20,
               color: "#333",
               cursor: "pointer",
             }}
+          
           >
             Đà Nẵng Đi Mô
           </span>
@@ -128,16 +123,18 @@ const dispatch = useDispatch();
         e.target.style.width = "220px";
           }}
         />
-      </div>
-<Select
+        <Select
                 defaultValue={i18n.language}
-                style={{ width: 100, marginRight: 16 }}
+                style={{ width: 200, marginRight: 16 }}
                 onChange={lng => handleChangeLanguage(lng)}
                 options={[
                     { value: "vi", label: "Tiếng Việt" },
                     { value: "en", label: "English" },
                 ]}
             />
+            
+      </div>
+
       {/* Navigation */}
       <Menu
         mode="horizontal"

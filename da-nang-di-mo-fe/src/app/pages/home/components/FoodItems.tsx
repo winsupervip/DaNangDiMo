@@ -4,86 +4,42 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import HouseIcon from '@mui/icons-material/House';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { motion } from "motion/react";
 import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 
-type FoodItem = {
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  price: number; 
-  place: string; 
-  rating: number; 
-  reviews?: number; 
-  category: string; 
-  hashtags: string[];
-  isAvailable?: boolean; 
-  deliveryTime?: string; 
-};
 const styles = {
   foodItems: {margin: "20px", display: "flex", gap: "24px"},
 };
-const items: FoodItem[] = [
-  {
-    id: 1,
-    name: "Phở Bò",
-    description: "Món phở truyền thống với nước dùng đậm đà.",
-    imageUrl: "/images/test_pic.jpg",
-    price: 50000,
-    place: "Quận 1, TP.HCM",
-    rating: 4.5,
-    reviews: 120,
-    category: "Món ăn chính",
-    hashtags: ["phở", "bò", "truyền thống"],
-    isAvailable: true,
-    deliveryTime: "30-45 phút",
-    
-  },
-  {
-    id: 2,
-    name: "Bánh Mì Thịt Nướng",
-    description: "Bánh mì giòn với thịt nướng thơm ngon.",
-    imageUrl: "/images/test_pic.jpg",
-    price: 30000,
-    place: "Quận 3, TP.HCM",
-    rating: 4.2,
-    reviews: 85,
-    category: "Món ăn chính",
-    hashtags: ["phở", "bò", "truyền thống"],
-    isAvailable: true,
-    deliveryTime: "20-30 phút",
-  },
-  {
-    id: 3,
-    name: "Gỏi Cuốn Tôm",
-    description: "Gỏi cuốn tươi mát với tôm và rau sống.",
-    imageUrl: "/images/test_pic.jpg",
-    price: 20000,
-    place: "Quận 5, TP.HCM",
-    rating: 4.8,
-    reviews: 60,
-    category: "Món ăn chính",
-    hashtags: ["healthy", "fresh"],
-    isAvailable: true,
-    deliveryTime: "15-25 phút",
-  },
-];
+interface IProps {
+foodItems: IFoodItem[]
+}
 
-export function FoodItems() {
+
+export function FoodItems(items:IProps) {
   // State lưu danh sách id các item đã yêu thích
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [isFlipped, setIsFlipped] = useState(false)
   const selectedSubItem = useSelector((state: RootState) => state.selectedSubItem.value);
-  const itemsFiltered = items.filter(item => item.hashtags.includes(selectedSubItem));
   console.log("Selected Sub Item:", selectedSubItem);
+  let itemsFiltered = items.foodItems.filter(item => item.hashtags.includes(selectedSubItem));
+  if (!selectedSubItem) {
+    itemsFiltered = items.foodItems;
+  }
 
   return (
     <div style={styles.foodItems}>
+     
       {itemsFiltered.map((item) => (
+        <motion.div
+           whileHover={ { scale: 1.05 }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.2 }}
+          key={item.id}>
         <div
-          key={item.id}
+     
           style={{
             border: "1px solid #eee",
             borderRadius: 8,
@@ -100,21 +56,22 @@ export function FoodItems() {
             overflow: "hidden",
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLDivElement).style.transform = "scale(1.05)";
+           
             const btns = (e.currentTarget as HTMLDivElement).querySelector(
               ".hover-buttons"
             ) as HTMLDivElement;
             if (btns) btns.style.opacity = "1";
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLDivElement).style.transform = "scale(1)";
+          
             const btns = (e.currentTarget as HTMLDivElement).querySelector(
               ".hover-buttons"
             ) as HTMLDivElement;
             if (btns) btns.style.opacity = "0";
           }}
         >
-            <div style={{
+          {!isFlipped?<div className='food-card'>
+           <div style={{
             position: "absolute",
             top: 10,
             left: 10,
@@ -218,6 +175,7 @@ export function FoodItems() {
               Lưu
             </button>
           </div>
+           </div>:<div className='restaurant-card'></div>}
       <div
         className="hover-buttons"
         style={{
@@ -253,6 +211,7 @@ export function FoodItems() {
             justifyContent: "center",
             gap: 6,
           }}
+          onClick={() => setIsFlipped(false)}
         >
         <FastfoodIcon style={{ fontSize: 18 }} />
           MÓN
@@ -275,20 +234,16 @@ export function FoodItems() {
             outline: "none",
             cursor: "pointer",
           }}
-          onClick={e => {
-            // Find the card container
-            const card = (e.currentTarget as HTMLElement).closest('.food-card');
-            if (card) {
-              card.classList.add('flipped');
-            }
-          }}
+         onClick={() => setIsFlipped(true)}
         >
           <HouseIcon style={{ fontSize: 18 }} />
           QUÁN
         </button>
         </div>
       </div>
+       
         </div>
+        </motion.div>
       ))}
     </div>
   );

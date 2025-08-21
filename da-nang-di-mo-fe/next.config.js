@@ -2,9 +2,11 @@ module.exports = {
   // ...existing code...
   images: {
     // ...existing code...
-    domains: [
-      // ...existing domains...
-      "example.com"
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "example.com",
+      },
     ],
     // ...existing code...
   },
