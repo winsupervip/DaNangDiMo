@@ -6,33 +6,49 @@ import HouseIcon from '@mui/icons-material/House';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { motion } from "motion/react";
 import Image from "next/image";
+import { useSearchParams } from 'next/navigation';
 import { useState } from "react";
 import { useSelector } from 'react-redux';
+import useSWR from 'swr';
+import { LoadingCircleSpinner } from '../../../loading/loadingSpinner';
 import { RootState } from '../../../store';
-
-const styles = {
-  foodItems: {margin: "20px", display: "flex", gap: "24px"},
-};
-interface IProps {
-foodItems: IFoodItem[]
-}
+const fetcher = (args:string) => fetch(args).then(res => res.json())
 
 
-export function FoodItems(items:IProps) {
-  // State lưu danh sách id các item đã yêu thích
+
+
+export function FoodItems() {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [isFlipped, setIsFlipped] = useState(false)
   const selectedSubItem = useSelector((state: RootState) => state.selectedSubItem.value);
-  console.log("Selected Sub Item:", selectedSubItem);
-  let itemsFiltered = items.foodItems.filter(item => item.hashtags.includes(selectedSubItem));
+     const searchParams = useSearchParams();
+  const page = Number(searchParams?.get('page')) || 1;
+ console.log("Selected Sub Item:", selectedSubItem);
+
+
+   const { data, error, isLoading, isValidating } = useSWR(
+    `http://localhost:3000/api/fooditems?page=${page}`,
+    fetcher,
+  
+  );
+
+if (isLoading) return <LoadingCircleSpinner />
+if (isValidating) return <LoadingCircleSpinner />
+if (error) return <div>Lỗi khi tải dữ liệu</div>
+
+   console.log(data);
+   
+
+ 
+  let itemsFiltered = data.filter((item: IFoodItem) => item.hashtags.includes(selectedSubItem));
   if (!selectedSubItem) {
-    itemsFiltered = items.foodItems;
+    itemsFiltered = data;
   }
 
   return (
-    <div style={styles.foodItems}>
+    <div>
      
-      {itemsFiltered.map((item) => (
+      {itemsFiltered.map((item: IFoodItem) => (
         <motion.div
            whileHover={ { scale: 1.05 }}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -47,10 +63,8 @@ export function FoodItems(items:IProps) {
             height: 390,
             boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
             background: "#fff",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            transition: "transform 0.2s cubic-bezier(.4,2,.6,1)",
+          padding: "0 10px",
+           
             cursor: "pointer",
             position: "relative",
             overflow: "hidden",
@@ -70,7 +84,9 @@ export function FoodItems(items:IProps) {
             if (btns) btns.style.opacity = "0";
           }}
         >
-          {!isFlipped?<div className='food-card'>
+          {!isFlipped?<div className='food-card' style={{  display: "flex",
+            flexDirection: "column",
+            alignItems: "center",}}>
            <div style={{
             position: "absolute",
             top: 10,
